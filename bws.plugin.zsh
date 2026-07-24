@@ -2,18 +2,15 @@
 # Bitwarden Secrets Manager plugin for oh-my-zsh
 # Works with the Bitwarden Secrets Manager CLI (bws)
 
-# Check if bws is installed
+# Check if bws is installed (silently)
 if ! command -v bws &> /dev/null; then
-  echo "Warning: bws (Bitwarden Secrets Manager CLI) not found. Install it first."
-  echo "macOS: brew install bitwarden/tap/bws"
-  echo "Linux: https://bitwarden.com/help/secrets-manager-cli/"
+  # Don't echo during shell init; just skip loading
   return 1
 fi
 
-# Check if jq is installed
+# Check if jq is installed (silently)
 if ! command -v jq &> /dev/null; then
-  echo "Warning: jq is required for this plugin"
-  echo "Install: brew install jq (macOS) or apt-get install jq (Linux)"
+  # Don't echo during shell init; just skip loading
   return 1
 fi
 
@@ -151,8 +148,9 @@ bwstoken() {
   fi
 }
 
-# Tab completion for bws
-if [[ -n ${ZSH_VERSION-} ]]; then
-  autoload -U +X bashcompinit && bashcompinit
-  complete -C bws bws 2>/dev/null || true
-fi
+# Tab completion for bws (commented out to avoid conflicts)
+# Uncomment if you need bash-style completion:
+# if [[ -n ${ZSH_VERSION-} ]]; then
+#   autoload -U +X bashcompinit && bashcompinit
+#   complete -C bws bws 2>/dev/null || true
+# fi
